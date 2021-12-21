@@ -5,6 +5,10 @@
         <option name="USE_TAB_CHARACTER" value="true" />
       </value>
     </option>
+    <HTMLCodeStyleSettings>
+      <option name="HTML_ATTRIBUTE_WRAP" value="0" />
+      <option name="HTML_TEXT_WRAP" value="0" />
+    </HTMLCodeStyleSettings>
     <PHPCodeStyleSettings>
       <option name="CONCAT_SPACES" value="false" />
       <option name="COMMA_AFTER_LAST_ARRAY_ELEMENT" value="true" />

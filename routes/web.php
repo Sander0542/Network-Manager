@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\NetworkController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -16,5 +18,7 @@ use Inertia\Inertia;
 */
 
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
-    Route::get('', ['App\Http\Controllers\DashboardController', 'index'])->name('dashboard');
+    Route::get('', [DashboardController::class, 'index'])->name('dashboard');
+
+    Route::resource('networks', NetworkController::class);
 });

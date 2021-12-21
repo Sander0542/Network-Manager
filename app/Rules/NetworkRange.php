@@ -3,7 +3,9 @@
 namespace App\Rules;
 
 use Dxw\CIDR\IPRange;
+use Exception;
 use Illuminate\Contracts\Validation\Rule;
+use IPv4\SubnetCalculator;
 
 class NetworkRange implements Rule
 {
@@ -16,7 +18,14 @@ class NetworkRange implements Rule
      */
     public function passes($attribute, $value)
     {
-        return !IPRange::Make($value)->isErr();
+        try {
+            $parts = explode('/', $value);
+            new SubnetCalculator($parts[0], $parts[1]);
+
+            return true;
+        } catch (Exception) {
+            return false;
+        }
     }
 
     /**

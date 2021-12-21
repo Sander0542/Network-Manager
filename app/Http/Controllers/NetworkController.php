@@ -4,17 +4,32 @@ namespace App\Http\Controllers;
 
 use App\Models\Network;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class NetworkController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Inertia\Response
      */
-    public function index()
+    public function index(): \Inertia\Response
     {
-        //
+        $networks = \Auth::user()->networks->map(function (Network $network) {
+            return [
+                'id' => $network->id,
+                'name' => $network->name,
+                'range' => $network->range->getNetworkPortion().'/'.$network->range->getNetworkSize(),
+                'range_start' => $network->range_start,
+                'range_end' => $network->range_end,
+                'max_hosts' => $network->range->getNumberAddressableHosts(),
+                'hosts' => 0,
+            ];
+        });
+
+        return Inertia::render('Networks/Index', [
+            'networks' => $networks,
+        ]);
     }
 
     /**
@@ -30,7 +45,7 @@ class NetworkController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -41,18 +56,45 @@ class NetworkController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Network  $network
-     * @return \Illuminate\Http\Response
+     * @param \App\Models\Network $network
+     * @return \Inertia\Response
      */
     public function show(Network $network)
     {
-        //
+        $networkIps = $network->ips;
+        $ips = collect($network->range->getAllHostIPAddresses())->mapWithKeys(function ($ip) use ($networkIps) {
+            $networkIp = $networkIps->first(function ($value) use ($ip) {
+                return $value->address == $ip;
+            });
+
+            return [
+                $ip => [
+                    'id' => $networkIp?->id,
+                    'name' => $networkIp?->name,
+                    'address' => $ip,
+                    'ports' => $networkIp?->ports,
+                ],
+            ];
+        });
+
+        return Inertia::render('Networks/Show', [
+            'network' => [
+                'id' => $network->id,
+                'name' => $network->name,
+                'range' => $network->range->getNetworkPortion().'/'.$network->range->getNetworkSize(),
+                'range_start' => $network->range_start,
+                'range_end' => $network->range_end,
+                'max_hosts' => $network->range->getNumberAddressableHosts(),
+                'hosts' => 0,
+                'ips' => $ips,
+            ],
+        ]);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Network  $network
+     * @param \App\Models\Network $network
      * @return \Illuminate\Http\Response
      */
     public function edit(Network $network)
@@ -63,8 +105,8 @@ class NetworkController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Network  $network
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\Network $network
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Network $network)
@@ -75,7 +117,7 @@ class NetworkController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Network  $network
+     * @param \App\Models\Network $network
      * @return \Illuminate\Http\Response
      */
     public function destroy(Network $network)

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateNetworksTable extends Migration
+class CreateNetworkIpsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,12 @@ class CreateNetworksTable extends Migration
      */
     public function up()
     {
-        Schema::create('networks', function (Blueprint $table) {
+        Schema::create('network_ips', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('users', 'id');
+            $table->foreignId('network_id')->constrained('networks', 'id');
             $table->string('name');
-            $table->string('range', 19);
+            $table->string('address', 15);
+            $table->json('ports');
             $table->timestamps();
         });
     }
@@ -29,6 +30,6 @@ class CreateNetworksTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('networks');
+        Schema::dropIfExists('network_ips');
     }
 }
