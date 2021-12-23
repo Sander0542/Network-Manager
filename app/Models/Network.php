@@ -14,6 +14,12 @@ class Network extends Model
         'range' => NetworkRange::class,
     ];
 
+    protected $fillable = [
+        'user_id',
+        'name',
+        'range'
+    ];
+
     /**
      * @return string
      */

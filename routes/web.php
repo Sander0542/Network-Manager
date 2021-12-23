@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\NetworkController;
+use App\Http\Controllers\NetworkIpController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -20,5 +21,6 @@ use Inertia\Inertia;
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('', [DashboardController::class, 'index'])->name('dashboard');
 
+    Route::resource('networks.ips', NetworkIpController::class)->only(['store', 'destroy']);
     Route::resource('networks', NetworkController::class);
 });

@@ -15,20 +15,20 @@ class NetworkController extends Controller
      */
     public function index(): \Inertia\Response
     {
-        $networks = \Auth::user()->networks->map(function (Network $network) {
-            return [
-                'id' => $network->id,
-                'name' => $network->name,
-                'range' => $network->range->getNetworkPortion().'/'.$network->range->getNetworkSize(),
-                'range_start' => $network->range_start,
-                'range_end' => $network->range_end,
-                'max_hosts' => $network->range->getNumberAddressableHosts(),
-                'hosts' => 0,
-            ];
-        });
-
         return Inertia::render('Networks/Index', [
-            'networks' => $networks,
+            'networks' => function () {
+                return Network::where('user_id', \Auth::user()->id)->orWhereNull('user_id')->get()->map(function (Network $network) {
+                    return [
+                        'id' => $network->id,
+                        'name' => $network->name,
+                        'range' => $network->range->getNetworkPortion().'/'.$network->range->getNetworkSize(),
+                        'range_start' => $network->range_start,
+                        'range_end' => $network->range_end,
+                        'max_hosts' => $network->range->getNumberAddressableHosts(),
+                        'hosts' => $network->ips()->count('id'),
+                    ];
+                });
+            },
         ]);
     }
 
@@ -46,7 +46,7 @@ class NetworkController extends Controller
      * Store a newly created resource in storage.
      *
      * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(Request $request)
     {
@@ -72,7 +72,7 @@ class NetworkController extends Controller
                     'id' => $networkIp?->id,
                     'name' => $networkIp?->name,
                     'address' => $ip,
-                    'ports' => $networkIp?->ports,
+                    'ports' => $networkIp?->ports ?? [],
                 ],
             ];
         });
@@ -85,7 +85,7 @@ class NetworkController extends Controller
                 'range_start' => $network->range_start,
                 'range_end' => $network->range_end,
                 'max_hosts' => $network->range->getNumberAddressableHosts(),
-                'hosts' => 0,
+                'hosts' => $networkIps->count(),
                 'ips' => $ips,
             ],
         ]);

@@ -13,6 +13,13 @@ class NetworkIp extends Model
         'ports' => 'array',
     ];
 
+    protected $fillable = [
+        'network_id',
+        'name',
+        'address',
+        'ports',
+    ];
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
