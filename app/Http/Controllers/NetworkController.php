@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Network\StoreRequest;
 use App\Models\Network;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -35,22 +36,32 @@ class NetworkController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Inertia\Response
      */
     public function create()
     {
-        //
+        return Inertia::render('Networks/Create');
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param \App\Http\Requests\Network\StoreRequest $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request)
+    public function store(StoreRequest $request)
     {
-        //
+        $data = $request->validated();
+
+        $network = new Network();
+        $network->name = $data['name'];
+        $network->range = $data['range'];
+
+        if ($network->save()) {
+            return redirect()->route('networks.index')->with('success', 'The network has been successfully added.');
+        }
+
+        return redirect()->back()->withErrors(['alert', 'The network could not be added.']);
     }
 
     /**

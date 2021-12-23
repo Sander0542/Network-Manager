@@ -118,7 +118,7 @@ export default defineComponent({
     data: function () {
         return {
             filters: {
-                onlyUsed: true,
+                onlyUsed: this.network.hosts !== 0,
             },
 
             modifyIpForm: null,

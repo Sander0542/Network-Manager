@@ -21,6 +21,10 @@ class NetworkIpController extends Controller
 
         $ip = NetworkIp::where('network_id', $network->id)->where('address', $data['address'])->first();
 
+        usort($data['ports'], function ($a, $b) {
+            return $a['port'] > $b['port'];
+        });
+
         if ($ip) {
             $ip->name = $data['name'];
             $ip->ports = $data['ports'];

@@ -15,7 +15,7 @@
                         </div>
                         <div class="mb-3">
                             <jet-label for="modifyIpName" value="Name"/>
-                            <jet-input id="modifyIpName" type="text" v-model="form.name" :class="{ 'is-invalid': form.errors.name }" autocomplete="name"/>
+                            <jet-input id="modifyIpName" type="text" v-model="form.name" :class="{ 'is-invalid': form.errors.name }" autocomplete="ip-name"/>
                             <jet-input-error :message="form.errors.name"/>
                         </div>
                         <div class="mb-3">

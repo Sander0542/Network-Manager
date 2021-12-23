@@ -34,6 +34,10 @@ class NetworkRange implements CastsAttributes
      */
     public function set($model, string $key, $value, array $attributes)
     {
+        if (is_string($value)) {
+            return $value;
+        }
+
         return $value->getNetworkPortion().'/'.$value->getNetworkSize();
     }
 }
