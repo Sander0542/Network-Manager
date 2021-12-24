@@ -2,8 +2,19 @@
     "name": "sander0542/network-manager",
     "type": "project",
     "description": "The Laravel Framework.",
-    "keywords": ["framework", "laravel"],
+    "keywords": [
+        "framework",
+        "laravel"
+    ],
     "license": "MIT",
+    "authors": [
+        {
+            "name": "Sander Jochems",
+            "email": "contact@sanderjochems.com",
+            "homepage": "https://sanderjochems.com",
+            "role": "Founder"
+        }
+    ],
     "require": {
         "php": "^8.0",
         "fruitcake/laravel-cors": "^2.0",
@@ -15,6 +26,7 @@
         "laravel/sanctum": "^2.11",
         "laravel/tinker": "^2.5",
         "markrogoyski/ipv4-subnet-calculator": "^3.1",
+        "mcstreetguy/composer-parser": "^1.1",
         "tightenco/ziggy": "^1.0"
     },
     "require-dev": {
