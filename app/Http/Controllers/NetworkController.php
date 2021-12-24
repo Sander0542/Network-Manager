@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Network\StoreRequest;
+use App\Http\Requests\Network\UpdateRequest;
 use App\Models\Network;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -59,7 +60,7 @@ class NetworkController extends Controller
         $network->range = $data['range'];
 
         if ($network->save()) {
-            return redirect()->route('networks.index')->with('success', 'The network has been successfully added.');
+            return redirect()->route('networks.show', $network->id)->with('success', 'The network has been successfully added.');
         }
 
         return redirect()->back()->withErrors(['alert', 'The network could not be added.']);
@@ -107,33 +108,55 @@ class NetworkController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param \App\Models\Network $network
-     * @return \Illuminate\Http\Response
+     * @return \Inertia\Response
      */
     public function edit(Network $network)
     {
-        //
+        return Inertia::render('Networks/Edit', [
+            'network' => [
+                'id' => $network->id,
+                'name' => $network->name,
+                'range' => $network->range->getNetworkPortion().'/'.$network->range->getNetworkSize(),
+                'range_start' => $network->range_start,
+                'range_end' => $network->range_end,
+                'max_hosts' => $network->range->getNumberAddressableHosts(),
+            ],
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param \App\Http\Requests\Network\UpdateRequest $request
      * @param \App\Models\Network $network
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, Network $network)
+    public function update(UpdateRequest $request, Network $network)
     {
-        //
+        $data = $request->validated();
+
+        $network->name = $data['name'];
+        $network->range = $data['range'];
+
+        if ($network->save()) {
+            return redirect()->route('networks.show', $network->id)->with('success', 'The network was successfully updated.');
+        }
+
+        return redirect()->back()->withErrors(['alert' => 'The network could not be updated.']);
     }
 
     /**
      * Remove the specified resource from storage.
      *
      * @param \App\Models\Network $network
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy(Network $network)
     {
-        //
+        if ($network->delete()) {
+            return redirect()->route('networks.index')->with('success', 'The network was successfully deleted.');
+        }
+
+        return redirect()->back()->withErrors(['alert' => 'The network could not be deleted.']);
     }
 }
