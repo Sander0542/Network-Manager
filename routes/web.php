@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AboutController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\NetworkController;
 use App\Http\Controllers\NetworkIpController;
@@ -23,4 +24,8 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
 
     Route::resource('networks.ips', NetworkIpController::class)->only(['store', 'destroy']);
     Route::resource('networks', NetworkController::class);
+
+    Route::prefix('about')->name('about.')->group(function () {
+        Route::get('', [AboutController::class, 'index'])->name('index');
+    });
 });

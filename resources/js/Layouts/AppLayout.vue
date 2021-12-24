@@ -106,6 +106,16 @@
 
                                 <hr class="dropdown-divider">
 
+                                <h6 class="dropdown-header small text-muted">
+                                    Application
+                                </h6>
+
+                                <jet-dropdown-link :href="route('about.index')">
+                                    About
+                                </jet-dropdown-link>
+
+                                <hr class="dropdown-divider">
+
                                 <!-- Authentication -->
                                 <form @submit.prevent="logout">
                                     <jet-dropdown-link as="button">
