@@ -54,6 +54,7 @@ class NetworkController extends Controller
         $data = $request->validated();
 
         $network = new Network();
+        $network->user_id = \Auth::id();
         $network->name = $data['name'];
         $network->range = $data['range'];
 
