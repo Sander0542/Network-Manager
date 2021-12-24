@@ -114,6 +114,10 @@
                                     About
                                 </jet-dropdown-link>
 
+                                <a class="dropdown-item px-4 link-donate" href="https://github.com/sponsors/Sander0542" target="_blank">
+                                    Donate
+                                </a>
+
                                 <hr class="dropdown-divider">
 
                                 <!-- Authentication -->
