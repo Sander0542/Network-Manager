@@ -17,7 +17,7 @@ class Network extends Model
     protected $fillable = [
         'user_id',
         'name',
-        'range'
+        'range',
     ];
 
     /**
@@ -50,5 +50,13 @@ class Network extends Model
     public function ips(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(NetworkIp::class, 'network_id', 'id');
+    }
+
+    public function delete()
+    {
+        // Remove ips on network deletion
+        $this->ips()->delete();
+
+        return parent::delete();
     }
 }
