@@ -16,7 +16,7 @@
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">Information</h5>
-                        <table class="table table-borderless m-0">
+                        <table class="table table-borderless m-0 mb-2">
                             <tr>
                                 <th>Subnet</th>
                                 <td>{{ network.range }}</td>
@@ -34,6 +34,7 @@
                                 <td>{{ network.hosts }}/{{ network.max_hosts }}</td>
                             </tr>
                         </table>
+                        <link-button class="btn-sm" :href="route('networks.edit', this.network.id)">Edit</link-button>
                     </div>
                 </div>
                 <br/>
