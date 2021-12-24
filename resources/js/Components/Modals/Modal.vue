@@ -46,6 +46,9 @@ export default defineComponent({
     },
     mounted() {
         this.bootstrapModal = new bootstrap.Modal(document.getElementById(this.id));
+    },
+    unmounted() {
+        this.bootstrapModal.hide();
     }
 })
 </script>
