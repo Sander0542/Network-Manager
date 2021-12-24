@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Network\StoreRequest;
+use App\Http\Requests\Network\UpdateRequest;
 use App\Models\Network;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -126,13 +127,22 @@ class NetworkController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param \App\Http\Requests\Network\UpdateRequest $request
      * @param \App\Models\Network $network
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, Network $network)
+    public function update(UpdateRequest $request, Network $network)
     {
-        //
+        $data = $request->validated();
+
+        $network->name = $data['name'];
+        $network->range = $data['range'];
+
+        if ($network->save()) {
+            return redirect()->route('networks.show', $network->id)->with('success', 'The network was successfully updated.');
+        }
+
+        return redirect()->back()->withErrors(['alert' => 'The network could not be updated.']);
     }
 
     /**

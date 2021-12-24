@@ -84,7 +84,7 @@ export default defineComponent({
     },
     methods: {
         submitUpdate() {
-            this.updateForm.post(this.route('networks.update', this.network.id), {
+            this.updateForm.put(this.route('networks.update', this.network.id), {
                 preserveScroll: true,
                 preserveState: true,
             });
