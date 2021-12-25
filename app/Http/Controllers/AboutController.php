@@ -10,12 +10,6 @@ class AboutController extends Controller
 {
     public function index()
     {
-        $versionFilePath = public_path('version');
-        $applicationVersion = 'Unknown';
-        if (file_exists($versionFilePath)) {
-            $applicationVersion = file_get_contents($versionFilePath);
-        }
-
         $composerFile = ComposerParser::parseComposerJson(base_path('composer.json'));
         $composerLock = ComposerParser::parseLockfile(base_path('composer.lock'));
         $composerPackages = collect($composerLock->getPackages()->getData())->map(function ($package) {
@@ -41,7 +35,7 @@ class AboutController extends Controller
                     'License' => $composerFile->getLicense()[0],
                 ],
                 'versions' => [
-                    'Application' => $applicationVersion,
+                    'Application' => applicationVersion(),
                     'PHP' => phpversion(),
                     'Laravel' => app()->version(),
                 ],
