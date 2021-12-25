@@ -23,6 +23,24 @@
                     </ul>
                 </div>
             </div>
+            <div v-if="updatedHosts.length > 0" class="col-6">
+                <div class="card">
+                    <div class="card-body pb-0">
+                        <h5 class="card-title m-0">Updated Hosts</h5>
+                    </div>
+                    <ul class="list-group">
+                        <li v-for="host in updatedHosts" class="list-group-item d-flex justify-content-between align-items-center border-bottom">
+                            <div class="me-auto">
+                                <div class="fw-bold">{{ host.name }}</div>
+                                {{ host.address }}
+                            </div>
+                            <span class="badge bg-primary rounded-pill">{{ host.network_name }}</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
     </app-layout>
 </template>
 
@@ -36,6 +54,7 @@ export default defineComponent({
     },
     props: {
         newHosts: Array,
+        updatedHosts: Array,
     }
 });
 </script>
