@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Network\StoreRequest;
 use App\Http\Requests\Network\UpdateRequest;
 use App\Models\Network;
+use Auth;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -19,7 +20,7 @@ class NetworkController extends Controller
     {
         return Inertia::render('Networks/Index', [
             'networks' => function () {
-                return Network::where('user_id', \Auth::user()->id)->orWhereNull('user_id')->get()->map(function (Network $network) {
+                return Network::whereUser(Auth::id())->with('ips')->orderBy('name')->get()->map(function (Network $network) {
                     return [
                         'id' => $network->id,
                         'name' => $network->name,
@@ -55,7 +56,7 @@ class NetworkController extends Controller
         $data = $request->validated();
 
         $network = new Network();
-        $network->user_id = \Auth::id();
+        $network->user_id = Auth::id();
         $network->name = $data['name'];
         $network->range = $data['range'];
 

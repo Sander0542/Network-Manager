@@ -143,3 +143,14 @@
         background-color: #bfa100;
     }
 }
+
+.card > .list-group {
+    > .list-group-item {
+        border: none;
+        border-bottom: 1px solid #dee2e6;
+
+        &:last-child {
+            border: none !important;
+        }
+    }
+}

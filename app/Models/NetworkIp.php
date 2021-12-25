@@ -25,6 +25,6 @@ class NetworkIp extends Model
      */
     public function network(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
-        return $this->belongsTo(Network::class, 'id', 'network_id');
+        return $this->belongsTo(Network::class, 'network_id', 'id');
     }
 }
