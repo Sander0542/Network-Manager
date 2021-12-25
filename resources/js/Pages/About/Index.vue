@@ -60,7 +60,7 @@
                         <h5 class="card-title m-0">Composer Packages</h5>
                     </div>
                     <ul class="list-group">
-                        <li v-for="library in application.libraries.composer" class="list-group-item d-flex justify-content-between align-items-center border-0 border-bottom">
+                        <li v-for="library in application.libraries.composer" class="list-group-item d-flex justify-content-between align-items-center">
                             <div class="me-auto">
                                 <div class="fw-bold">{{ library.name }}</div>
                                 {{ library.description }}
