@@ -19,7 +19,7 @@ class NetworkController extends Controller
     {
         return Inertia::render('Networks/Index', [
             'networks' => function () {
-                return Network::where('user_id', \Auth::user()->id)->orWhereNull('user_id')->get()->map(function (Network $network) {
+                return Network::where('user_id', \Auth::user()->id)->orWhereNull('user_id')->with('ips')->orderBy('name')->get()->map(function (Network $network) {
                     return [
                         'id' => $network->id,
                         'name' => $network->name,
