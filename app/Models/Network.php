@@ -21,6 +21,15 @@ class Network extends Model
     ];
 
     /**
+     * @param $userId
+     * @return \Illuminate\Database\Eloquent\Builder|static
+     */
+    public static function whereUser($userId)
+    {
+        return self::whereNull('user_id')->orWhere('user_id', $userId);
+    }
+
+    /**
      * @return string
      */
     public function getRangeStartAttribute(): string
