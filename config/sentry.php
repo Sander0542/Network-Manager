@@ -2,7 +2,7 @@
 
 return [
 
-    'dsn' => env('SENTRY_LARAVEL_DSN', env('SENTRY_DSN', 'https://68668b93b0bd4bc7806e45062d3be7b6@o476647.ingest.sentry.io/6123237')),
+    'dsn' => 'https://68668b93b0bd4bc7806e45062d3be7b6@o1098923.ingest.sentry.io/6123237',
 
     // capture release as git sha
     'release' => applicationVersion(null),
