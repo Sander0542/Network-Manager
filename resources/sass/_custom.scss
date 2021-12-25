@@ -135,3 +135,11 @@
         margin-right: 2px;
     }
 }
+
+.link-donate {
+    background-color: #ffd700;
+
+    &:hover, &:focus {
+        background-color: #bfa100;
+    }
+}

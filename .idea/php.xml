@@ -141,6 +141,7 @@
       <path value="$PROJECT_DIR$/vendor/symfony/filesystem" />
       <path value="$PROJECT_DIR$/vendor/react/promise" />
       <path value="$PROJECT_DIR$/vendor/markrogoyski/ipv4-subnet-calculator" />
+      <path value="$PROJECT_DIR$/vendor/mcstreetguy/composer-parser" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.0">

@@ -30,6 +30,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
 
       # Install the npm tool
       - name: Setup node
@@ -45,6 +47,10 @@ jobs:
       # Build the npm resources for production
       - name: Laravel mix
         run: npm run production
+
+      # Store the version
+      - name: Store version
+        run: git describe > public/version
 
       # Workaround: https://github.com/docker/build-push-action/issues/461
       - name: Setup Docker buildx
