@@ -23,7 +23,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('', [DashboardController::class, 'index'])->name('dashboard');
 
     Route::resource('networks.ips', NetworkIpController::class)->only(['store', 'destroy']);
-    Route::resource('networks', NetworkController::class)->except(['edit']);
+    Route::resource('networks', NetworkController::class);
 
     Route::prefix('about')->name('about.')->group(function () {
         Route::get('', [AboutController::class, 'index'])->name('index');
