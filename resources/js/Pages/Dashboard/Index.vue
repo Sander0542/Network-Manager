@@ -16,7 +16,6 @@
 
 <script>
 import {defineComponent} from "vue"
-import {Link} from '@inertiajs/inertia-vue3';
 import AppLayout from "@/Layouts/AppLayout.vue"
 import HostsCard from "@/Pages/Dashboard/Component/HostsCard";
 
@@ -24,7 +23,6 @@ export default defineComponent({
     components: {
         HostsCard,
         AppLayout,
-        Link
     },
     props: {
         newHosts: Array,
