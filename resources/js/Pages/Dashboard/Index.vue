@@ -7,38 +7,8 @@
         </template>
 
         <div class="row">
-            <div v-if="newHosts.length > 0" class="col-6">
-                <div class="card">
-                    <div class="card-body pb-0">
-                        <h5 class="card-title m-0">New Hosts</h5>
-                    </div>
-                    <ul class="list-group">
-                        <li v-for="host in newHosts" class="list-group-item d-flex justify-content-between align-items-center border-bottom">
-                            <div class="me-auto">
-                                <div class="fw-bold">{{ host.name }}</div>
-                                {{ host.address }}
-                            </div>
-                            <span class="badge bg-primary rounded-pill">{{ host.network_name }}</span>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <div v-if="updatedHosts.length > 0" class="col-6">
-                <div class="card">
-                    <div class="card-body pb-0">
-                        <h5 class="card-title m-0">Updated Hosts</h5>
-                    </div>
-                    <ul class="list-group">
-                        <li v-for="host in updatedHosts" class="list-group-item d-flex justify-content-between align-items-center border-bottom">
-                            <div class="me-auto">
-                                <div class="fw-bold">{{ host.name }}</div>
-                                {{ host.address }}
-                            </div>
-                            <span class="badge bg-primary rounded-pill">{{ host.network_name }}</span>
-                        </li>
-                    </ul>
-                </div>
-            </div>
+            <hosts-card title="New Hosts" :hosts="newHosts"/>
+            <hosts-card title="Updated Hosts" :hosts="updatedHosts"/>
         </div>
 
     </app-layout>
@@ -46,11 +16,15 @@
 
 <script>
 import {defineComponent} from "vue"
+import {Link} from '@inertiajs/inertia-vue3';
 import AppLayout from "@/Layouts/AppLayout.vue"
+import HostsCard from "@/Pages/Dashboard/Component/HostsCard";
 
 export default defineComponent({
     components: {
-        AppLayout
+        HostsCard,
+        AppLayout,
+        Link
     },
     props: {
         newHosts: Array,
