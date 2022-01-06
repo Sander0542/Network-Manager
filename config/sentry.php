@@ -56,22 +56,6 @@ return [
 
     'controllers_base_namespace' => env('SENTRY_CONTROLLERS_BASE_NAMESPACE', 'App\\Http\\Controllers'),
 
-    'before_send' => function (\Sentry\Event $event): ?\Sentry\Event {
-        $request = $event->getRequest();
-        $event->setRequest([
-            'url' => 'http://network.manager'.request()->getRequestUri(),
-            'method' => $request['method'] ?? null,
-            'headers' => collect($request['headers'] ?? [])->only([
-                'connection',
-                'cache-control',
-                'user-agent',
-                'accept',
-                'accept-encoding',
-                'accept-language',
-            ])->toArray(),
-        ]);
-
-        return $event;
-    },
+    'before_send' => [\App\Exceptions\Sentry::class, 'beforeSend'],
 
 ];
