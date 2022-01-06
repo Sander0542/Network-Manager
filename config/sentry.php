@@ -60,8 +60,8 @@ return [
         $request = $event->getRequest();
         $event->setRequest([
             'url' => 'http://network.manager'.request()->getRequestUri(),
-            'method' => $request['method'],
-            'headers' => collect($request['headers'])->only([
+            'method' => $request['method'] ?? null,
+            'headers' => collect($request['headers'] ?? [])->only([
                 'connection',
                 'cache-control',
                 'user-agent',
