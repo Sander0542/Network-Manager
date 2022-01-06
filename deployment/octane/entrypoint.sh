@@ -2,6 +2,7 @@
 set -e
 
 initialStuff() {
+    php artisan check:config; \
     php artisan migrate --force; \
     php artisan optimize:clear; \
     php artisan package:discover --ansi; \
