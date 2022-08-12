@@ -40,13 +40,19 @@
                 <br/>
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">Filters</h5>
+                        <h5 class="card-title">View Mode</h5>
 
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" v-model="filters.onlyUsed" id="filterAllIps">
-                            <label class="form-check-label" for="filterAllIps">
-                                Only used hosts
-                            </label>
+                            <input class="form-check-input" type="radio" v-model="filters.viewMode" :value="VIEWMODE_SMART" id="viewModeSmart">
+                            <label class="form-check-label" for="viewModeSmart">Smart</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" v-model="filters.viewMode" :value="VIEWMODE_ALL" id="viewModeAll">
+                            <label class="form-check-label" for="viewModeAll">All</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" v-model="filters.viewMode" :value="VIEWMODE_USED" id="viewModeUsed">
+                            <label class="form-check-label" for="viewModeUsed">Used</label>
                         </div>
                     </div>
                 </div>
@@ -106,6 +112,10 @@ import JetInputError from "@/Jetstream/InputError";
 import LinkButton from "@/Components/LinkButton";
 import ModifyIpModal from "@/Pages/Networks/Components/ModifyIpModal";
 
+const VIEWMODE_SMART = 'smart';
+const VIEWMODE_ALL = 'all';
+const VIEWMODE_USED = 'used';
+
 export default defineComponent({
     components: {
         AppLayout,
@@ -118,8 +128,12 @@ export default defineComponent({
     },
     data: function () {
         return {
+            VIEWMODE_SMART,
+            VIEWMODE_ALL,
+            VIEWMODE_USED,
+
             filters: {
-                onlyUsed: this.network.hosts !== 0,
+                viewMode: this.network.hosts !== 0 ? VIEWMODE_SMART : VIEWMODE_ALL,
             },
 
             modifyIpForm: null,
@@ -133,9 +147,11 @@ export default defineComponent({
     },
     computed: {
         filteredIps: function () {
-            return _.filter(this.network.ips, (ip) => {
-                if (this.filters.onlyUsed && ip.id == null) {
-                    return false;
+            return _.filter(this.network.ips, (ip, index, ips) => {
+                if (this.filters.viewMode === VIEWMODE_SMART) {
+                    return ip.id || ips[index - 1]?.id || ips[index + 1]?.id;
+                } else if (this.filters.viewMode === VIEWMODE_USED) {
+                    return ip.id;
                 }
 
                 return true;

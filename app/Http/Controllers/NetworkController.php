@@ -76,18 +76,16 @@ class NetworkController extends Controller
     public function show(Network $network)
     {
         $networkIps = $network->ips;
-        $ips = collect($network->range->getAllHostIPAddresses())->mapWithKeys(function ($ip) use ($networkIps) {
+        $ips = collect($network->range->getAllHostIPAddresses())->map(function ($ip) use ($networkIps) {
             $networkIp = $networkIps->first(function ($value) use ($ip) {
                 return $value->address == $ip;
             });
 
             return [
-                $ip => [
-                    'id' => $networkIp?->id,
-                    'name' => $networkIp?->name,
-                    'address' => $ip,
-                    'ports' => $networkIp?->ports ?? [],
-                ],
+                'id' => $networkIp?->id,
+                'name' => $networkIp?->name,
+                'address' => $ip,
+                'ports' => $networkIp?->ports ?? [],
             ];
         });
 
