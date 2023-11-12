@@ -17,7 +17,7 @@
         "@popperjs/core": "^2.5.3",
         "@vue/compiler-sfc": "^3.0.5",
         "alpinejs": "^3.2.6",
-        "axios": "^0.21",
+        "axios": "^1.6",
         "bootstrap": "^5.1.0",
         "laravel-mix": "^6.0.6",
         "lodash": "^4.17.19",
